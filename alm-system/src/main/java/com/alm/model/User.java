@@ -3,38 +3,28 @@ package com.alm.model;
 import java.time.LocalDateTime;
 
 public class User {
-    private int id;
+    private int userId;
     private String username;
     private String passwordHash;
-    private String email;
-    private String fullName;
     private String role;
-    private boolean active;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(int id, String username, String passwordHash, String email, String fullName,
-                String role, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public User(int userId, String username, String passwordHash, String role, LocalDateTime createdAt) {
+        this.userId = userId;
         this.username = username;
         this.passwordHash = passwordHash;
-        this.email = email;
-        this.fullName = fullName;
         this.role = role;
-        this.active = active;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -53,36 +43,12 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -93,26 +59,14 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
                 ", role='" + role + '\'' +
-                ", active=" + active +
                 ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

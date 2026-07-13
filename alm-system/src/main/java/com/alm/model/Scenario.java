@@ -1,47 +1,77 @@
 package com.alm.model;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Scenario {
-    private int id;
-    private String name;
+    private int scenarioId;
+    private String scenarioName;
+    private int interestRateShiftBp;
+    private BigDecimal liquidityShockPct;
+    private BigDecimal creditShockPct;
+    private LocalDate scenarioDate;
     private String description;
-    private double interestRateShock;
-    private double liquidityShock;
-    private double creditShock;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Scenario() {
-    }
+    public Scenario() {}
 
-    public Scenario(int id, String name, String description, double interestRateShock,
-                    double liquidityShock, double creditShock, LocalDateTime createdAt,
-                    LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
+    public Scenario(int scenarioId, String scenarioName, int interestRateShiftBp,
+                    BigDecimal liquidityShockPct, BigDecimal creditShockPct,
+                    LocalDate scenarioDate, String description) {
+        this.scenarioId = scenarioId;
+        this.scenarioName = scenarioName;
+        this.interestRateShiftBp = interestRateShiftBp;
+        this.liquidityShockPct = liquidityShockPct;
+        this.creditShockPct = creditShockPct;
+        this.scenarioDate = scenarioDate;
         this.description = description;
-        this.interestRateShock = interestRateShock;
-        this.liquidityShock = liquidityShock;
-        this.creditShock = creditShock;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public int getId() {
-        return id;
+    public int getScenarioId() {
+        return scenarioId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setScenarioId(int scenarioId) {
+        this.scenarioId = scenarioId;
     }
 
-    public String getName() {
-        return name;
+    public String getScenarioName() {
+        return scenarioName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setScenarioName(String scenarioName) {
+        this.scenarioName = scenarioName;
+    }
+
+    public int getInterestRateShiftBp() {
+        return interestRateShiftBp;
+    }
+
+    public void setInterestRateShiftBp(int interestRateShiftBp) {
+        this.interestRateShiftBp = interestRateShiftBp;
+    }
+
+    public BigDecimal getLiquidityShockPct() {
+        return liquidityShockPct;
+    }
+
+    public void setLiquidityShockPct(BigDecimal liquidityShockPct) {
+        this.liquidityShockPct = liquidityShockPct;
+    }
+
+    public BigDecimal getCreditShockPct() {
+        return creditShockPct;
+    }
+
+    public void setCreditShockPct(BigDecimal creditShockPct) {
+        this.creditShockPct = creditShockPct;
+    }
+
+    public LocalDate getScenarioDate() {
+        return scenarioDate;
+    }
+
+    public void setScenarioDate(LocalDate scenarioDate) {
+        this.scenarioDate = scenarioDate;
     }
 
     public String getDescription() {
@@ -52,57 +82,16 @@ public class Scenario {
         this.description = description;
     }
 
-    public double getInterestRateShock() {
-        return interestRateShock;
-    }
-
-    public void setInterestRateShock(double interestRateShock) {
-        this.interestRateShock = interestRateShock;
-    }
-
-    public double getLiquidityShock() {
-        return liquidityShock;
-    }
-
-    public void setLiquidityShock(double liquidityShock) {
-        this.liquidityShock = liquidityShock;
-    }
-
-    public double getCreditShock() {
-        return creditShock;
-    }
-
-    public void setCreditShock(double creditShock) {
-        this.creditShock = creditShock;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Override
     public String toString() {
         return "Scenario{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "scenarioId=" + scenarioId +
+                ", scenarioName='" + scenarioName + '\'' +
+                ", interestRateShiftBp=" + interestRateShiftBp +
+                ", liquidityShockPct=" + liquidityShockPct +
+                ", creditShockPct=" + creditShockPct +
+                ", scenarioDate=" + scenarioDate +
                 ", description='" + description + '\'' +
-                ", interestRateShock=" + interestRateShock +
-                ", liquidityShock=" + liquidityShock +
-                ", creditShock=" + creditShock +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

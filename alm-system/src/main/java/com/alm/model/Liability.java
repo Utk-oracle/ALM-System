@@ -1,46 +1,56 @@
 package com.alm.model;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Liability {
-    private int id;
-    private String name;
+    private int liabilityId;
+    private String liabilityName;
     private String liabilityType;
-    private double amount;
-    private double interestRate;
-    private LocalDateTime maturityDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private BigDecimal principalAmount;
+    private BigDecimal interestRate;
+    private String rateType;
+    private LocalDate maturityDate;
+    private String currency;
+    private BigDecimal duration;
+    private boolean isRateSensitive;
+    private boolean isShortTerm;
+    private String liabilityStatus;
 
-    public Liability() {
-    }
+    public Liability() {}
 
-    public Liability(int id, String name, String liabilityType, double amount, double interestRate,
-                     LocalDateTime maturityDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
+    public Liability(int liabilityId, String liabilityName, String liabilityType,
+                     BigDecimal principalAmount, BigDecimal interestRate, String rateType,
+                     LocalDate maturityDate, String currency, BigDecimal duration,
+                     boolean isRateSensitive, boolean isShortTerm, String liabilityStatus) {
+        this.liabilityId = liabilityId;
+        this.liabilityName = liabilityName;
         this.liabilityType = liabilityType;
-        this.amount = amount;
+        this.principalAmount = principalAmount;
         this.interestRate = interestRate;
+        this.rateType = rateType;
         this.maturityDate = maturityDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.currency = currency;
+        this.duration = duration;
+        this.isRateSensitive = isRateSensitive;
+        this.isShortTerm = isShortTerm;
+        this.liabilityStatus = liabilityStatus;
     }
 
-    public int getId() {
-        return id;
+    public int getLiabilityId() {
+        return liabilityId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLiabilityId(int liabilityId) {
+        this.liabilityId = liabilityId;
     }
 
-    public String getName() {
-        return name;
+    public String getLiabilityName() {
+        return liabilityName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLiabilityName(String liabilityName) {
+        this.liabilityName = liabilityName;
     }
 
     public String getLiabilityType() {
@@ -51,57 +61,92 @@ public class Liability {
         this.liabilityType = liabilityType;
     }
 
-    public double getAmount() {
-        return amount;
+    public BigDecimal getPrincipalAmount() {
+        return principalAmount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setPrincipalAmount(BigDecimal principalAmount) {
+        this.principalAmount = principalAmount;
     }
 
-    public double getInterestRate() {
+    public BigDecimal getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(double interestRate) {
+    public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
     }
 
-    public LocalDateTime getMaturityDate() {
+    public String getRateType() {
+        return rateType;
+    }
+
+    public void setRateType(String rateType) {
+        this.rateType = rateType;
+    }
+
+    public LocalDate getMaturityDate() {
         return maturityDate;
     }
 
-    public void setMaturityDate(LocalDateTime maturityDate) {
+    public void setMaturityDate(LocalDate maturityDate) {
         this.maturityDate = maturityDate;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public BigDecimal getDuration() {
+        return duration;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setDuration(BigDecimal duration) {
+        this.duration = duration;
+    }
+
+    public boolean isRateSensitive() {
+        return isRateSensitive;
+    }
+
+    public void setRateSensitive(boolean rateSensitive) {
+        isRateSensitive = rateSensitive;
+    }
+
+    public boolean isShortTerm() {
+        return isShortTerm;
+    }
+
+    public void setShortTerm(boolean shortTerm) {
+        isShortTerm = shortTerm;
+    }
+
+    public String getLiabilityStatus() {
+        return liabilityStatus;
+    }
+
+    public void setLiabilityStatus(String liabilityStatus) {
+        this.liabilityStatus = liabilityStatus;
     }
 
     @Override
     public String toString() {
         return "Liability{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "liabilityId=" + liabilityId +
+                ", liabilityName='" + liabilityName + '\'' +
                 ", liabilityType='" + liabilityType + '\'' +
-                ", amount=" + amount +
+                ", principalAmount=" + principalAmount +
                 ", interestRate=" + interestRate +
                 ", maturityDate=" + maturityDate +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", currency='" + currency + '\'' +
+                ", duration=" + duration +
+                ", isRateSensitive=" + isRateSensitive +
+                ", isShortTerm=" + isShortTerm +
+                ", liabilityStatus='" + liabilityStatus + '\'' +
                 '}';
     }
 }
