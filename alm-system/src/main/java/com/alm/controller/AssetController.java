@@ -1,18 +1,20 @@
 package com.alm.controller;
 
-import com.alm.database.DBConnection;
-import com.alm.model.Asset;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+import com.alm.database.DBConnection;
+import com.alm.model.Asset;
+
+@Repository
 public class AssetController {
     private static final String BASE_SELECT = "SELECT asset_id, asset_name, asset_type, principal_amount, interest_rate, rate_type, maturity_date, currency, duration, is_rate_sensitive, is_liquid, credit_status, asset_status FROM assets";
 
@@ -20,8 +22,8 @@ public class AssetController {
         Objects.requireNonNull(asset, "asset must not be null");
         String sql = "INSERT INTO assets (asset_name, asset_type, principal_amount, interest_rate, rate_type, maturity_date, currency, duration, is_rate_sensitive, is_liquid, credit_status, asset_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+           try (Connection connection = DBConnection.getConnection();
+               PreparedStatement statement = connection.prepareStatement(sql, new String[]{"asset_id"})) {
             statement.setString(1, asset.getAssetName());
             statement.setString(2, asset.getAssetType());
             JdbcValue.setBigDecimal(statement, 3, asset.getPrincipalAmount());
@@ -30,8 +32,8 @@ public class AssetController {
             JdbcValue.setLocalDate(statement, 6, asset.getMaturityDate());
             statement.setString(7, asset.getCurrency());
             JdbcValue.setBigDecimal(statement, 8, asset.getDuration());
-            statement.setBoolean(9, asset.isRateSensitive());
-            statement.setBoolean(10, asset.isLiquid());
+            statement.setInt(9, asset.isRateSensitive() ? 1 : 0);
+            statement.setInt(10, asset.isLiquid() ? 1 : 0);
             statement.setString(11, asset.getCreditStatus());
             statement.setString(12, asset.getAssetStatus());
             int affectedRows = statement.executeUpdate();
@@ -78,8 +80,8 @@ public class AssetController {
             JdbcValue.setLocalDate(statement, 6, asset.getMaturityDate());
             statement.setString(7, asset.getCurrency());
             JdbcValue.setBigDecimal(statement, 8, asset.getDuration());
-            statement.setBoolean(9, asset.isRateSensitive());
-            statement.setBoolean(10, asset.isLiquid());
+            statement.setInt(9, asset.isRateSensitive() ? 1 : 0);
+            statement.setInt(10, asset.isLiquid() ? 1 : 0);
             statement.setString(11, asset.getCreditStatus());
             statement.setString(12, asset.getAssetStatus());
             statement.setInt(13, asset.getAssetId());
@@ -135,8 +137,8 @@ public class AssetController {
         asset.setMaturityDate(JdbcValue.getLocalDate(resultSet, "maturity_date"));
         asset.setCurrency(resultSet.getString("currency"));
         asset.setDuration(resultSet.getBigDecimal("duration"));
-        asset.setRateSensitive(resultSet.getBoolean("is_rate_sensitive"));
-        asset.setLiquid(resultSet.getBoolean("is_liquid"));
+        asset.setRateSensitive(resultSet.getInt("is_rate_sensitive") == 1);
+        asset.setLiquid(resultSet.getInt("is_liquid") == 1);
         asset.setCreditStatus(resultSet.getString("credit_status"));
         asset.setAssetStatus(resultSet.getString("asset_status"));
         return asset;

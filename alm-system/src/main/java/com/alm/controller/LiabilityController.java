@@ -1,8 +1,5 @@
 package com.alm.controller;
 
-import com.alm.database.DBConnection;
-import com.alm.model.Liability;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.alm.database.DBConnection;
+import com.alm.model.Liability;
 
 public class LiabilityController {
     private static final String BASE_SELECT = "SELECT liability_id, liability_name, liability_type, principal_amount, interest_rate, rate_type, maturity_date, currency, duration, is_rate_sensitive, is_short_term, liability_status FROM liabilities";
@@ -30,8 +30,8 @@ public class LiabilityController {
             JdbcValue.setLocalDate(statement, 6, liability.getMaturityDate());
             statement.setString(7, liability.getCurrency());
             JdbcValue.setBigDecimal(statement, 8, liability.getDuration());
-            statement.setBoolean(9, liability.isRateSensitive());
-            statement.setBoolean(10, liability.isShortTerm());
+            statement.setInt(9, liability.isRateSensitive() ? 1 : 0);
+            statement.setInt(10, liability.isShortTerm() ? 1 : 0);
             statement.setString(11, liability.getLiabilityStatus());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -77,8 +77,8 @@ public class LiabilityController {
             JdbcValue.setLocalDate(statement, 6, liability.getMaturityDate());
             statement.setString(7, liability.getCurrency());
             JdbcValue.setBigDecimal(statement, 8, liability.getDuration());
-            statement.setBoolean(9, liability.isRateSensitive());
-            statement.setBoolean(10, liability.isShortTerm());
+            statement.setInt(9, liability.isRateSensitive() ? 1 : 0);
+            statement.setInt(10, liability.isShortTerm() ? 1 : 0);
             statement.setString(11, liability.getLiabilityStatus());
             statement.setInt(12, liability.getLiabilityId());
             return statement.executeUpdate() == 1;
@@ -133,8 +133,8 @@ public class LiabilityController {
         liability.setMaturityDate(JdbcValue.getLocalDate(resultSet, "maturity_date"));
         liability.setCurrency(resultSet.getString("currency"));
         liability.setDuration(resultSet.getBigDecimal("duration"));
-        liability.setRateSensitive(resultSet.getBoolean("is_rate_sensitive"));
-        liability.setShortTerm(resultSet.getBoolean("is_short_term"));
+        liability.setRateSensitive(resultSet.getInt("is_rate_sensitive") == 1);
+        liability.setShortTerm(resultSet.getInt("is_short_term") == 1);
         liability.setLiabilityStatus(resultSet.getString("liability_status"));
         return liability;
     }

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: alm-system-api
+
+server:
+  port: ${PORT:6060}
+
+# DBConnection reads these values from the matching environment variables.
+# Set ALM_DB_PASSWORD outside source control before starting the API.
+alm:
+  database:
+    url: ${ALM_DB_URL:jdbc:oracle:thin:@localhost:1521/FREE}
+    user: ${ALM_DB_USER:system}
+    password: ${ALM_DB_PASSWORD:root}
