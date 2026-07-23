@@ -2,6 +2,7 @@ package com.alm.controller;
 
 import com.alm.database.DBConnection;
 import com.alm.model.Scenario;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Repository
 public class ScenarioController {
     private static final String BASE_SELECT = "SELECT scenario_id, scenario_name, interest_rate_shift_bp, liquidity_shock_pct, credit_shock_pct, scenario_date, description FROM scenarios";
 

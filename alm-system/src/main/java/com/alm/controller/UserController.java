@@ -2,6 +2,7 @@ package com.alm.controller;
 
 import com.alm.database.DBConnection;
 import com.alm.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.time.LocalDateTime;
 
+@Repository
 public class UserController {
     private static final String BASE_SELECT = "SELECT user_id, username, password_hash, role, created_at FROM users";
 

@@ -1,8 +1,5 @@
 package com.alm.controller;
 
-import com.alm.database.DBConnection;
-import com.alm.model.MarketRate;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +10,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+import com.alm.database.DBConnection;
+import com.alm.model.MarketRate;
+
+@Repository
 public class MarketRateController {
     private static final String BASE_SELECT = "SELECT rate_id, rate_date, rate_type, tenor_months, interest_rate, currency FROM market_rates";
 

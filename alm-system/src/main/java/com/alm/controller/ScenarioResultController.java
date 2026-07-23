@@ -1,8 +1,5 @@
 package com.alm.controller;
 
-import com.alm.database.DBConnection;
-import com.alm.model.ScenarioResult;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +10,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+import com.alm.database.DBConnection;
+import com.alm.model.ScenarioResult;
+
+@Repository
 public class ScenarioResultController {
     private static final String BASE_SELECT = "SELECT result_id, scenario_id, metric_name, baseline_value, scenario_value, impact_value FROM scenario_results";
 
