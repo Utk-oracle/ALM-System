@@ -2,6 +2,7 @@ package com.alm.controller;
 
 import com.alm.database.DBConnection;
 import com.alm.model.CashFlow;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Repository
 public class CashFlowController {
     private static final String BASE_SELECT = "SELECT flow_id, asset_id, liability_id, flow_date, amount, flow_type FROM cash_flows";
 

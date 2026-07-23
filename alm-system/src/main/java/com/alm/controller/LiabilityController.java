@@ -12,7 +12,9 @@ import java.util.Optional;
 
 import com.alm.database.DBConnection;
 import com.alm.model.Liability;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class LiabilityController {
     private static final String BASE_SELECT = "SELECT liability_id, liability_name, liability_type, principal_amount, interest_rate, rate_type, maturity_date, currency, duration, is_rate_sensitive, is_short_term, liability_status FROM liabilities";
 

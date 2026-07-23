@@ -52,6 +52,183 @@ This repository is being developed as a group project to demonstrate:
 
 ---
 
+## REST API Endpoints
+
+All REST endpoints use the base path `http://localhost:8080/api`.
+
+### Assets
+- `GET /api/assets`
+- `GET /api/assets?status={status}`
+- `GET /api/assets?type={type}`
+- `GET /api/assets/{id}`
+- `POST /api/assets`
+- `PUT /api/assets/{id}`
+- `DELETE /api/assets/{id}`
+
+Example asset JSON:
+```json
+{
+  "assetName": "Fixed Deposit",
+  "assetType": "Deposit",
+  "principalAmount": 100000.00,
+  "interestRate": 5.00,
+  "rateType": "Fixed",
+  "maturityDate": "2028-12-31",
+  "currency": "USD",
+  "duration": 36,
+  "rateSensitive": false,
+  "liquid": true,
+  "creditStatus": "A",
+  "assetStatus": "Active"
+}
+```
+
+### Liabilities
+- `GET /api/liabilities`
+- `GET /api/liabilities?status={status}`
+- `GET /api/liabilities?type={type}`
+- `GET /api/liabilities/{id}`
+- `POST /api/liabilities`
+- `PUT /api/liabilities/{id}`
+- `DELETE /api/liabilities/{id}`
+
+Example liability JSON:
+```json
+{
+  "liabilityName": "Corporate Loan",
+  "liabilityType": "Loan",
+  "principalAmount": 500000.00,
+  "interestRate": 4.50,
+  "rateType": "Variable",
+  "maturityDate": "2027-05-31",
+  "currency": "USD",
+  "duration": 24,
+  "rateSensitive": true,
+  "shortTerm": false,
+  "liabilityStatus": "Active"
+}
+```
+
+### Cash Flows
+- `GET /api/cash-flows`
+- `GET /api/cash-flows?assetId={assetId}`
+- `GET /api/cash-flows?liabilityId={liabilityId}`
+- `GET /api/cash-flows/{id}`
+- `POST /api/cash-flows`
+- `PUT /api/cash-flows/{id}`
+- `DELETE /api/cash-flows/{id}`
+
+Example cash flow JSON:
+```json
+{
+  "assetId": 1,
+  "liabilityId": null,
+  "flowDate": "2026-08-01",
+  "amount": 1500.00,
+  "flowType": "Interest"
+}
+```
+
+### Market Rates
+- `GET /api/market-rates`
+- `GET /api/market-rates?currency={currency}`
+- `GET /api/market-rates?rateType={rateType}&currency={currency}`
+- `GET /api/market-rates/{id}`
+- `POST /api/market-rates`
+- `PUT /api/market-rates/{id}`
+- `DELETE /api/market-rates/{id}`
+
+Example market rate JSON:
+```json
+{
+  "rateDate": "2026-07-01",
+  "rateType": "LIBOR",
+  "tenorMonths": 12,
+  "interestRate": 4.25,
+  "currency": "USD"
+}
+```
+
+### Report History
+- `GET /api/report-history`
+- `GET /api/report-history?generatedBy={userId}`
+- `GET /api/report-history/{id}`
+- `POST /api/report-history`
+- `PUT /api/report-history/{id}`
+- `DELETE /api/report-history/{id}`
+
+Example report history JSON:
+```json
+{
+  "reportName": "Q2 ALM Summary",
+  "reportType": "Liquidity",
+  "generatedOn": "2026-07-22T14:30:00",
+  "generatedBy": 1,
+  "summary": "Quarterly liquidity and interest rate sensitivity report."
+}
+```
+
+### Risk Metrics
+- `GET /api/risk-metrics`
+- `GET /api/risk-metrics?scenarioId={scenarioId}`
+- `GET /api/risk-metrics/{id}`
+- `POST /api/risk-metrics`
+- `PUT /api/risk-metrics/{id}`
+- `DELETE /api/risk-metrics/{id}`
+
+Example risk metric JSON:
+```json
+{
+  "scenarioId": 1,
+  "reportingDate": "2026-07-21",
+  "totalAssets": 2000000.00,
+  "totalLiabilities": 1500000.00,
+  "netInterestIncome": 120000.00,
+  "liquidityRatio": 1.25,
+  "durationGap": 2.5,
+  "creditRiskScore": 8.1
+}
+```
+
+### Scenarios
+- `GET /api/scenarios`
+- `GET /api/scenarios/{id}`
+- `POST /api/scenarios`
+- `PUT /api/scenarios/{id}`
+- `DELETE /api/scenarios/{id}`
+
+Example scenario JSON:
+```json
+{
+  "scenarioName": "Stress Rate Shift",
+  "interestRateShiftBp": 150,
+  "liquidityShockPct": 10.0,
+  "creditShockPct": 5.0,
+  "scenarioDate": "2026-07-20",
+  "description": "Stress scenario with higher rates and reduced liquidity."
+}
+```
+
+### Users
+- `GET /api/users`
+- `GET /api/users?username={username}`
+- `GET /api/users/{id}`
+- `POST /api/users`
+- `PUT /api/users/{id}`
+- `DELETE /api/users/{id}`
+
+Example user JSON:
+```json
+{
+  "username": "admin",
+  "passwordHash": "securehashedpassword",
+  "role": "ADMIN",
+  "createdAt": "2026-07-22T10:15:00"
+}
+```
+
+---
+
 ## Folder Structure
 
 ```text

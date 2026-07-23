@@ -1,19 +1,22 @@
 package com.alm.controller;
 
-import com.alm.database.DBConnection;
-import com.alm.model.ReportHistory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Repository;
+
+import com.alm.database.DBConnection;
+import com.alm.model.ReportHistory;
+
+@Repository
 public class ReportHistoryController {
     private static final String BASE_SELECT = "SELECT report_id, report_name, report_type, generated_on, generated_by, summary FROM report_history";
 

@@ -1,5 +1,7 @@
+com\alm\controller\CashFlowRestController.class
 com\alm\database\DBConnection.class
 com\alm\controller\RiskMetricController$StatementBinder.class
+com\alm\controller\UserRestController.class
 com\alm\database\DatabaseConfiguration.class
 com\alm\controller\RiskMetricController.class
 com\alm\controller\CashFlowController.class
@@ -15,13 +17,16 @@ com\alm\controller\ScenarioController.class
 com\alm\controller\ScenarioResultController$StatementBinder.class
 com\alm\model\ReportHistory.class
 com\alm\controller\ScenarioController$StatementBinder.class
+com\alm\controller\RiskMetricRestController.class
 com\alm\controller\AssetRestController.class
 com\alm\application\Main.class
 com\alm\controller\MarketRateController$StatementBinder.class
 com\alm\controller\ScenarioResultController.class
 com\alm\controller\ReportHistoryController.class
 com\alm\controller\RestExceptionHandler.class
+com\alm\controller\ReportHistoryRestController.class
 com\alm\model\ScenarioResult.class
+com\alm\controller\MarketRateRestController.class
 com\alm\model\MarketRate.class
 com\alm\model\Asset.class
 com\alm\controller\LiabilityController.class
@@ -29,7 +34,9 @@ com\alm\controller\MarketRateController.class
 com\alm\controller\ReportHistoryController$StatementBinder.class
 com\alm\controller\CashFlowController$StatementBinder.class
 com\alm\controller\JdbcValue.class
+com\alm\controller\ScenarioRestController.class
 com\alm\application\RestApplication.class
 com\alm\controller\LiabilityController$StatementBinder.class
+com\alm\controller\LiabilityRestController.class
 com\alm\controller\AssetController$StatementBinder.class
 com\alm\controller\AssetController.class
