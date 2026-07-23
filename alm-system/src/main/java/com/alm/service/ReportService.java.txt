@@ -1,0 +1,147 @@
+// src/main/java/com/alm/service/ReportService.java
+package com.alm.service;
+
+import com.alm.controller.ReportHistoryController;
+import com.alm.database.DBConnection;
+import com.alm.model.AlmSummaryReport;
+import com.alm.model.ReportHistory;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Service
+public class ReportService {
+
+    private final ReportHistoryController reportHistoryController;
+
+    public ReportService(ReportHistoryController reportHistoryController) {
+        this.reportHistoryController = reportHistoryController;
+    }
+
+    public AlmSummaryReport createAlmSummary() throws SQLException {
+        BigDecimal totalAssets = getTotal(
+                "SELECT NVL(SUM(principal_amount), 0) " +
+                "FROM assets WHERE asset_status = 'ACTIVE'");
+
+        BigDecimal totalLiabilities = getTotal(
+                "SELECT NVL(SUM(principal_amount), 0) " +
+                "FROM liabilities WHERE liability_status = 'ACTIVE'");
+
+        BigDecimal liquidAssets = getTotal(
+                "SELECT NVL(SUM(principal_amount), 0) " +
+                "FROM assets WHERE is_liquid = 1 AND asset_status = 'ACTIVE'");
+
+        BigDecimal shortTermLiabilities = getTotal(
+                "SELECT NVL(SUM(principal_amount), 0) " +
+                "FROM liabilities WHERE is_short_term = 1 AND liability_status = 'ACTIVE'");
+
+        BigDecimal netPosition = totalAssets.subtract(totalLiabilities);
+
+        BigDecimal liquidityRatio = shortTermLiabilities.compareTo(BigDecimal.ZERO) == 0
+                ? BigDecimal.ZERO
+                : liquidAssets.divide(shortTermLiabilities, 4, RoundingMode.HALF_UP);
+
+        return new AlmSummaryReport(
+                LocalDate.now(),
+                totalAssets,
+                totalLiabilities,
+                liquidAssets,
+                shortTermLiabilities,
+                netPosition,
+                liquidityRatio
+        );
+    }
+
+    public byte[] generateAlmSummaryPdf(Integer generatedBy)
+            throws SQLException, IOException {
+
+        AlmSummaryReport report = createAlmSummary();
+
+        try (PDDocument document = new PDDocument();
+             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            try (PDPageContentStream content =
+                         new PDPageContentStream(document, page)) {
+
+                float y = 770;
+
+                y = writeLine(content, "ALM Summary Report", y, 20, true);
+                y = writeLine(content, "Report date: " + report.reportDate(), y, 12, false);
+                y -= 12;
+
+                y = writeLine(content, "Total Assets: INR " + report.totalAssets(), y, 12, false);
+                y = writeLine(content, "Total Liabilities: INR " + report.totalLiabilities(), y, 12, false);
+                y = writeLine(content, "Net Position: INR " + report.netPosition(), y, 12, false);
+                y = writeLine(content, "Liquid Assets: INR " + report.liquidAssets(), y, 12, false);
+                y = writeLine(content, "Short-Term Liabilities: INR " + report.shortTermLiabilities(), y, 12, false);
+                y = writeLine(content, "Liquidity Ratio: " + report.liquidityRatio(), y, 12, false);
+            }
+
+            document.save(output);
+            saveReportHistory(report, generatedBy);
+
+            return output.toByteArray();
+        }
+    }
+
+    private BigDecimal getTotal(String sql) throws SQLException {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            return resultSet.next() ? resultSet.getBigDecimal(1) : BigDecimal.ZERO;
+        }
+    }
+
+    private float writeLine(PDPageContentStream content, String text,
+                            float y, int fontSize, boolean bold) throws IOException {
+
+        PDType1Font font = new PDType1Font(
+                bold
+                        ? Standard14Fonts.FontName.HELVETICA_BOLD
+                        : Standard14Fonts.FontName.HELVETICA);
+
+        content.beginText();
+        content.setFont(font, fontSize);
+        content.newLineAtOffset(50, y);
+        content.showText(text);
+        content.endText();
+
+        return y - 24;
+    }
+
+    private void saveReportHistory(AlmSummaryReport report, Integer generatedBy)
+            throws SQLException {
+
+        ReportHistory history = new ReportHistory();
+        history.setReportName("ALM Summary Report");
+        history.setReportType("ALM_SUMMARY");
+        history.setGeneratedOn(LocalDateTime.now());
+        history.setGeneratedBy(generatedBy);
+        history.setSummary(
+                "Assets: " + report.totalAssets()
+                + ", Liabilities: " + report.totalLiabilities()
+                + ", Liquidity ratio: " + report.liquidityRatio()
+        );
+
+        reportHistoryController.create(history);
+    }
+}
